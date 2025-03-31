@@ -7,17 +7,17 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.http import JsonResponse
 from rest_framework import status
+import json
 
-# Index View (Render your main page)
+# Render your HTML form
 def index(request):
     return render(request, 'api/index.html')
 
 
-# Lead Dashboard View (Display Leads with Filtering)
+# Admin-style dashboard view
 def lead_dashboard(request):
-    leads = Lead.objects.all().order_by('-created_at')  # Display newest leads first
+    leads = Lead.objects.all().order_by('-created_at')
 
-    # Filtering
     status_filter = request.GET.get('status')
     source = request.GET.get('source')
     medium = request.GET.get('medium')
@@ -42,14 +42,41 @@ def lead_dashboard(request):
     return render(request, 'api/lead_dashboard.html', context)
 
 
-# ✅ Class-Based View for Lead Capture (Preferred for APIs)
-@method_decorator(csrf_exempt, name='dispatch')  # Allow cross-origin JS without CSRF
+# ✅ Lead capture view for JS tracker
+@method_decorator(csrf_exempt, name='dispatch')
 class LeadCreateView(APIView):
 
-    def post(self, request):
-        serializer = LeadSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response({"message": "Lead captured successfully."}, status=status.HTTP_201_CREATED)
+    def post(self, request, *args, **kwargs):
+        try:
+            # Try to decode body manually if needed
+            if request.content_type == "application/json":
+                data = json.loads(request.body.decode('utf-8'))
+            else:
+                data = request.data  # fallback if form-encoded
 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            # Debug log
+            print("📩 Incoming lead data:", data)
+
+            name = data.get('name') or data.get('id_name') or data.get('class_name')
+            email = data.get('email') or data.get('id_email') or data.get('class_email')
+
+            if not name or not email:
+                return Response({'error': 'Name and Email are required.'}, status=status.HTTP_400_BAD_REQUEST)
+
+            lead = Lead.objects.create(
+                name=name,
+                email=email,
+                phone=data.get('phone', ''),
+                message=data.get('message', ''),
+                status='Unique Lead',
+                source='JS Tracker Local',
+                medium='Web Form'
+            )
+
+            return Response({"message": "Lead captured successfully ✅"}, status=status.HTTP_201_CREATED)
+
+        except json.JSONDecodeError:
+            return Response({"error": "Invalid JSON"}, status=status.HTTP_400_BAD_REQUEST)
+
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
