@@ -18,7 +18,7 @@ SECRET_KEY = 'django-insecure-8!tjn&iuvt(my0eil5*u_fiqc@!dgktse%f781-ve9nfkwry2n
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['leadtracker-production.up.railway.app', '127.0.0.1', 'localhost']
 
 
 # Application definition
