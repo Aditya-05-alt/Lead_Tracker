@@ -32,11 +32,11 @@
         }
 
         // Send data to your Django backend
-        fetch("http://127.0.0.1:8000/leads/create/", {  
+        fetch("https://leadtracker-production.up.railway.app/api/leads/create/", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(formDetails)
-        })
+            body: JSON.stringify(formDetails),
+          })
         .then(response => response.json())
         .then(data => {
             console.log("Server Response: ", data);
