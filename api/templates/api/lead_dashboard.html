@@ -15,15 +15,18 @@
         }
         th {
             background-color: #007bff;
-            color: black;
+            color: white;
             cursor: pointer;
         }
-        @media (max-width: 768px) { /* Tablet & Mobile View */
+        th:hover {
+            background-color: #0056b3;
+        }
+        @media (max-width: 768px) {
             th, td {
                 font-size: 0.9rem;
             }
         }
-        @media (max-width: 576px) { /* Mobile View */
+        @media (max-width: 576px) {
             .table-responsive {
                 border: none;
             }
@@ -42,7 +45,7 @@
 </head>
 <body>
     <div class="container mt-5 mb-5">
-        <h1 class="text-center mb-4">Lead Dashboard</h1>
+        <h1 class="text-center mb-4">📊 Lead Dashboard</h1>
 
         <!-- Search & Filter Form -->
         <form method="GET" class="mb-4 d-flex justify-content-between flex-wrap filter-form">
@@ -61,7 +64,8 @@
                     <option value="All">All Sources</option>
                     <option value="google" {% if selected_source == 'google' %}selected{% endif %}>Google</option>
                     <option value="facebook" {% if selected_source == 'facebook' %}selected{% endif %}>Facebook</option>
-                    <option value="other" {% if selected_source == 'other' %}selected{% endif %}>Other</option>
+                    <option value="referral" {% if selected_source == 'referral' %}selected{% endif %}>Referral</option>
+                    <option value="JS Tracker Local" {% if selected_source == 'JS Tracker Local' %}selected{% endif %}>JS Tracker Local</option>
                 </select>
             </div>
             <div>
@@ -70,6 +74,7 @@
                     <option value="organic" {% if selected_medium == 'organic' %}selected{% endif %}>Organic</option>
                     <option value="paid" {% if selected_medium == 'paid' %}selected{% endif %}>Paid</option>
                     <option value="referral" {% if selected_medium == 'referral' %}selected{% endif %}>Referral</option>
+                    <option value="Web Form" {% if selected_medium == 'Web Form' %}selected{% endif %}>Web Form</option>
                 </select>
             </div>
             <div>
@@ -77,7 +82,7 @@
             </div>
         </form>
 
-        <!-- Leads Table (Responsive) -->
+        <!-- Leads Table -->
         <div class="table-responsive table-container shadow-sm">
             <table class="table table-bordered table-hover">
                 <thead>
@@ -88,7 +93,8 @@
                         <th onclick="sortTable(3)">Status</th>
                         <th onclick="sortTable(4)">Source</th>
                         <th onclick="sortTable(5)">Medium</th>
-                        <th onclick="sortTable(6)">Created At</th>
+                        <th onclick="sortTable(6)">Message</th>
+                        <th onclick="sortTable(7)">Created At</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -100,7 +106,12 @@
                         <td>{{ lead.status }}</td>
                         <td>{{ lead.source }}</td>
                         <td>{{ lead.medium }}</td>
-                        <td>{{ lead.created_at }}</td>
+                        <td>{{ lead.message }}</td>
+                        <td>{{ lead.created_at|date:"Y-m-d H:i" }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="8" class="text-center text-muted">No leads found.</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -108,19 +119,25 @@
         </div>
     </div>
 
-    <!-- JavaScript for Sorting -->
+    <!-- JavaScript for Table Sorting -->
     <script>
         function sortTable(columnIndex) {
-            var table = document.querySelector("table tbody");
-            var rows = Array.from(table.rows);
-            var sortedRows = rows.sort(function(a, b) {
-                var aText = a.cells[columnIndex].innerText.trim().toLowerCase();
-                var bText = b.cells[columnIndex].innerText.trim().toLowerCase();
+            const tableBody = document.querySelector("table tbody");
+            const rows = Array.from(tableBody.rows);
+            const sortedRows = rows.sort((a, b) => {
+                const aText = a.cells[columnIndex].innerText.trim().toLowerCase();
+                const bText = b.cells[columnIndex].innerText.trim().toLowerCase();
+
+                // Date sorting fallback
+                if (columnIndex === 7) {
+                    return new Date(bText) - new Date(aText); // latest first
+                }
+
                 return aText.localeCompare(bText);
             });
 
-            table.innerHTML = "";
-            sortedRows.forEach(row => table.appendChild(row));
+            tableBody.innerHTML = '';
+            sortedRows.forEach(row => tableBody.appendChild(row));
         }
     </script>
 </body>

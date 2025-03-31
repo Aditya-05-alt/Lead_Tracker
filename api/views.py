@@ -9,6 +9,7 @@ from django.http import JsonResponse
 from rest_framework import status
 import json
 
+
 # Render your HTML form
 def index(request):
     return render(request, 'api/index.html')
@@ -48,17 +49,23 @@ class LeadCreateView(APIView):
 
     def post(self, request, *args, **kwargs):
         try:
-            # Try to decode body manually if needed
+            # Manually decode if content is JSON
             if request.content_type == "application/json":
                 data = json.loads(request.body.decode('utf-8'))
             else:
-                data = request.data  # fallback if form-encoded
+                data = request.data
 
-            # Debug log
             print("📩 Incoming lead data:", data)
 
             name = data.get('name') or data.get('id_name') or data.get('class_name')
             email = data.get('email') or data.get('id_email') or data.get('class_email')
+            phone = data.get('phone', '')
+            message = data.get('message', '')
+            subject = data.get('subject', '')
+
+            # These now come from JS
+            source = data.get('source', 'JS Tracker Unknown Site')
+            medium = data.get('medium', 'Web Form')
 
             if not name or not email:
                 return Response({'error': 'Name and Email are required.'}, status=status.HTTP_400_BAD_REQUEST)
@@ -66,11 +73,11 @@ class LeadCreateView(APIView):
             lead = Lead.objects.create(
                 name=name,
                 email=email,
-                phone=data.get('phone', ''),
-                message=data.get('message', ''),
+                phone=phone,
+                message=message if message else subject,
                 status='Unique Lead',
-                source='JS Tracker Local',
-                medium='Web Form'
+                source=source,
+                medium=medium
             )
 
             return Response({"message": "Lead captured successfully ✅"}, status=status.HTTP_201_CREATED)
