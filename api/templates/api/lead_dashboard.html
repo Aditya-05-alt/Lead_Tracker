@@ -90,11 +90,12 @@
                         <th onclick="sortTable(0)">Name</th>
                         <th onclick="sortTable(1)">Email</th>
                         <th onclick="sortTable(2)">Phone</th>
-                        <th onclick="sortTable(3)">Status</th>
-                        <th onclick="sortTable(4)">Source</th>
-                        <th onclick="sortTable(5)">Medium</th>
-                        <th onclick="sortTable(6)">Message</th>
-                        <th onclick="sortTable(7)">Created At</th>
+                        <th onclick="sortTable(3)">Subject</th>
+                        <th onclick="sortTable(4)">Status</th>
+                        <th onclick="sortTable(5)">Source</th>
+                        <th onclick="sortTable(6)">Medium</th>
+                        <th onclick="sortTable(7)">Message</th>
+                        <th onclick="sortTable(8)">Created At</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -103,6 +104,7 @@
                         <td>{{ lead.name }}</td>
                         <td>{{ lead.email }}</td>
                         <td>{{ lead.phone }}</td>
+                        <td>{{ lead.subject }}</td>
                         <td>{{ lead.status }}</td>
                         <td>{{ lead.source }}</td>
                         <td>{{ lead.medium }}</td>
