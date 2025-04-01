@@ -58,7 +58,7 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "https://themcostudio.com",
+    "https://themcostudio.com","https://www.brandmirchi.com"
 ]
 
 CORS_ALLOW_CREDENTIALS = True
