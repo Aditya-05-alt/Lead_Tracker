@@ -59,7 +59,7 @@ class LeadCreateView(APIView):
 
             name = data.get('name') or data.get('id_name') or data.get('class_name')
             email = data.get('email') or data.get('id_email') or data.get('class_email')
-            phone = data.get('phone', '')
+            phone = data.get('phone', '') or data.get('id_phone') or data.get('class_phone')
             message = data.get('message', '')
             subject = data.get('subject', '')
 
@@ -74,6 +74,7 @@ class LeadCreateView(APIView):
                 name=name,
                 email=email,
                 phone=phone,
+                subject = subject,
                 message=message if message else subject,
                 status='Unique Lead',
                 source=source,

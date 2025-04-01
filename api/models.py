@@ -5,6 +5,7 @@ class Lead(models.Model):
     email = models.EmailField(blank=True, null=True)
     phone = models.CharField(max_length=20, blank=True, null=True)
     message = models.TextField(blank=True, null=True)
+    subject = models.TextField(max_length=255, blank=True, null=True)
     status = models.CharField(max_length=50, choices=[
         ('Unique Lead', 'Unique Lead'),
         ('Repeat Lead', 'Repeat Lead'),
