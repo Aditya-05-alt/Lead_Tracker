@@ -10,7 +10,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # For collectstatic on deploy
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'api/static'),  # Where your form_tracker.js lives
+   os.path.join(BASE_DIR, 'api/templates')  # Where your form_tracker.js lives
 ]
 
 # SECURITY WARNING: keep the secret key used in production secret!
