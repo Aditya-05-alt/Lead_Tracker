@@ -64,7 +64,9 @@ class LeadCreateView(APIView):
             subject = data.get('subject', '')
 
             # These now come from JS
-            source = data.get('source', 'JS Tracker Unknown Site')
+            pagelink = data.get('pagelink', 'JS Tracker Unknown Site')
+            source = data.get('source',"Direct")
+
             medium = data.get('medium', 'Web Form')
 
             if not name or not email:
@@ -77,6 +79,7 @@ class LeadCreateView(APIView):
                 subject = subject,
                 message=message if message else subject,
                 status='Unique Lead',
+                pagelink = pagelink,
                 source=source,
                 medium=medium
             )
