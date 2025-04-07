@@ -10,8 +10,8 @@ class Lead(models.Model):
         ('Unique Lead', 'Unique Lead'),
         ('Repeat Lead', 'Repeat Lead'),
     ])
-    pagelink = models.CharField(max_length=100, blank=True, null=True)
-    source = models.CharField(max_length=100, blank=True, null=True)
+    page_link = models.URLField(null=True, blank=True)
+    source = models.URLField(null=True, blank=True)
     medium = models.CharField(max_length=100, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     # button = models.CharField(max_length=100, blank=True, null=True)

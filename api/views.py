@@ -75,13 +75,13 @@ class LeadCreateView(APIView):
             lead = Lead.objects.create(
                 name=name,
                 email=email,
-                phone=phone,
-                subject = subject,
-                message=message if message else subject,
-                status='Unique Lead',
-                pagelink = pagelink,
-                source=source,
-                medium=medium
+                phone=data.get('phone', ''),
+                subject=data.get('subject', ''),
+                message=data.get('message', ''),
+                page_link=data.get('page_link', ''),
+                source=data.get('source', ''),
+                medium=data.get('medium', 'Web Form'),
+                status='Unique Lead'
             )
 
             return Response({"message": "Lead captured successfully ✅"}, status=status.HTTP_201_CREATED)

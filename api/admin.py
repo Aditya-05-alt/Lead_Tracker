@@ -5,6 +5,6 @@ from .models import Lead
 
 @admin.register(Lead)
 class LeadAdmin(admin.ModelAdmin):
-    list_display = ('name', 'email', 'phone', 'subject','message', 'status', 'pagelink','source', 'medium', 'created_at')
+    list_display = ('name', 'email', 'phone', 'subject','message', 'status', 'page_link','source', 'medium', 'created_at')
     list_filter = ('status', 'source', 'medium')
     search_fields = ('name', 'email', 'phone')
