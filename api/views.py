@@ -59,7 +59,7 @@ class LeadCreateView(APIView):
 
             name = data.get('name') or data.get('id_name') or data.get('class_name')
             email = data.get('email') or data.get('id_email') or data.get('class_email')
-            phone = data.get('phone', '') or data.get('id_phone') or data.get('class_phone')
+            phone = data.get('phone', '') or data.get('id_phone') or data.get('class_phone') or data.get("your-phone")
             message = data.get('message', '')
             subject = data.get('subject', '')
 
@@ -69,8 +69,8 @@ class LeadCreateView(APIView):
 
             medium = data.get('medium', 'Web Form')
 
-            if not name or not email:
-                return Response({'error': 'Name and Email are required.'}, status=status.HTTP_400_BAD_REQUEST)
+            # if not name or not email:
+            #     return Response({'error': 'Name and Email are required.'}, status=status.HTTP_400_BAD_REQUEST)
 
             lead = Lead.objects.create(
                 name=name,
