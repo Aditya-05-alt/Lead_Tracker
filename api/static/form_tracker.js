@@ -33,16 +33,16 @@
             return acc;
         }, {});
 
-        const name = normalized.name || normalized.yourname || '';
-        const email = normalized.email || normalized.youremail || '';
-        const subject = normalized.subject || normalized.yoursubject || '';
+        // const name = normalized.name || normalized.yourname || '';
+        // const email = normalized.email || normalized.youremail || '';
+        // const subject = normalized.subject || normalized.yoursubject || '';
 
-        if (!name || !email || !subject) {
-            console.error("❌ Missing required fields");
-            alert("Please fill out name, email, and subject.");
-            return;
-        }
-
+        // if (!name || !email || !subject) {
+        //     console.error("❌ Missing required fields");
+        //     alert("Please fill out name, email, and subject.");
+        //     return;
+        // }
+        // 
         fetch("https://leadtracker-production.up.railway.app/leads/create/", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -54,7 +54,7 @@
                 message: normalized.message || '',
                 source: document.referrer || 'direct',       // 🌐 Where user came *from*
                 page_link: window.location.href || 'unknown', // 🏠 Where form was submitted
-                // medium: 'Web Form'
+                medium: 'Web Form'
             }),
         })
         .then(res => res.json())

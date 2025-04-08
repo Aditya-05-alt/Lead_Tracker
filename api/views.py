@@ -64,7 +64,7 @@ class LeadCreateView(APIView):
             subject = data.get('subject', '')
 
             # These now come from JS
-            pagelink = data.get('pagelink', 'JS Tracker Unknown Site')
+            pagelink = data.get('page_link', 'JS Tracker Unknown Site')
             source = data.get('source',"Direct")
 
             medium = data.get('medium', 'Web Form')
