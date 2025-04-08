@@ -77,7 +77,7 @@ class LeadCreateView(APIView):
                 email=email,
                 phone=data.get('phone', ''),
                 subject=data.get('subject', ''),
-                message=data.get('message', ''),
+                message= message,
                 page_link=data.get('page_link', ''),
                 source=data.get('source', ''),
                 medium=data.get('medium', 'Web Form'),
