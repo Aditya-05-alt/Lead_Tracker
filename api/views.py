@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from api.serializer import LeadSerializer
@@ -9,10 +9,33 @@ from django.http import JsonResponse
 from rest_framework import status
 import json
 
+USERNAME = "admin"
+PASSWORD = "root@123"
+
+
+
 
 # Render your HTML form
 def index(request):
     return render(request, 'api/index.html')
+
+
+def login_view(request):
+    error = None
+
+
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        if username == USERNAME and password == PASSWORD:
+            # ✅ Success — redirect to dashboard
+            return redirect('lead_dashboard')
+        else:
+            error = "Invalid credentials. Please try again."
+
+    return render(request, 'api/login.html', {'error': error})
+
 
 
 # Admin-style dashboard view
@@ -40,7 +63,7 @@ def lead_dashboard(request):
         'selected_medium': medium,
         'search_query': search_query
     }
-    return render(request, 'api/lead_dashboard.html', context)
+    return render(request, 'api/dashboard.html', context)
 
 
 # ✅ Lead capture view for JS tracker
@@ -91,3 +114,7 @@ class LeadCreateView(APIView):
 
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+def test(request):
+     return render(request, 'api/dashboard.html')

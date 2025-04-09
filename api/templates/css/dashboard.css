@@ -1,0 +1,169 @@
+body {
+  background-color: #ecf0f1;
+  padding-top: 80px;
+}
+
+.custom-navbar {
+  background-color: #2c3e50;
+  padding: 0.8rem 2rem;
+  height: 80px;
+}
+
+.logo-img {
+  height: 55px;
+  width: auto;
+}
+
+.navbar-brand {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: white;
+}
+
+.username {
+  color: white;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.profile-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid white;
+}
+
+/* Sidebar */
+.sidebar {
+  background-color: #2c3e50;
+  width: 250px;
+  position: fixed;
+  top: 80px;
+  left: 0;
+  height: calc(100vh - 80px);
+  padding: 2rem 1rem;
+  color: white;
+  z-index: 1000;
+}
+
+.admin-block {
+  background-color: #34495e;
+  padding: 2rem 1rem;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 600;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Dealer Dropdown */
+.dealer-dropdown {
+  margin-top: 2rem;
+  color: white;
+}
+
+.dealer-dropdown label.form-label {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.custom-dropdown {
+  position: relative;
+  user-select: none;
+}
+
+.dropdown-header {
+  background-color: #ecf0f1;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: black;
+}
+
+.dropdown-arrow {
+  color: brown;
+  font-size: 1.1rem;
+}
+
+.dropdown-list {
+  display: none;
+  background-color: #ffffff;
+  border-radius: 5px;
+  margin-top: 0.5rem;
+  box-shadow: 0 0 10px rgba(0,0,0,0.15);
+  padding: 0.5rem 1rem;
+  max-height: 200px;
+  overflow-y: auto;
+  color: black;
+}
+
+/* Dealer options */
+.dealer-option {
+  padding: 0.5rem;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.2s ease;
+}
+
+.dealer-option:hover {
+  background-color: #eee;
+}
+
+.dealer-option.selected {
+  background-color: transparent;
+  font-weight: normal;
+}
+
+/* Content */
+main {
+  margin-left: 250px;
+  padding-top: 1rem;
+}
+
+.content {
+  background-color: white;
+  margin: 2rem;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Media Queries for Responsiveness */
+@media only screen and (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    height: auto;
+  }
+
+  .content {
+    margin-left: 0;
+  }
+
+  .custom-dropdown {
+    width: 100%;
+  }
+
+  .dropdown-header {
+    justify-content: space-between;
+    font-size: 1rem;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .sidebar {
+    display: none;
+  }
+
+  .content {
+    margin-left: 0;
+  }
+}
