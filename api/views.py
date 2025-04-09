@@ -63,7 +63,7 @@ def lead_dashboard(request):
         'selected_medium': medium,
         'search_query': search_query
     }
-    return render(request, 'api/dashboard.html', context)
+    return render(request, 'api/Dashboard.html', context)
 
 
 # ✅ Lead capture view for JS tracker
