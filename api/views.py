@@ -42,11 +42,24 @@ def login_view(request):
 def lead_dashboard(request):
     leads = Lead.objects.all().order_by('-created_at')
 
+    # Get current domain (host)
+    current_domain = request.get_host().lower()
+
+    # Optional filters from query params
     status_filter = request.GET.get('status')
     source = request.GET.get('source')
     medium = request.GET.get('medium')
     search_query = request.GET.get('search')
 
+    # 🔍 Automatically filter leads by domain
+    if "brandmirchi" in current_domain:
+        leads = leads.filter(page_link__icontains="brandmirchi")
+    elif "mco-studio" in current_domain:
+        leads = leads.filter(page_link__icontains="mco-studio")
+    else:
+        leads = leads.none()  # No leads if unknown domain
+
+    # ✅ Apply optional filters (if set)
     if status_filter and status_filter != 'All':
         leads = leads.filter(status=status_filter)
     if source and source != 'All':
@@ -61,7 +74,8 @@ def lead_dashboard(request):
         'selected_status': status_filter,
         'selected_source': source,
         'selected_medium': medium,
-        'search_query': search_query
+        'search_query': search_query,
+        'current_domain': current_domain  # For debugging/logging if needed
     }
     return render(request, 'api/Dashboard.html', context)
 
