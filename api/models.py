@@ -6,10 +6,12 @@ class Lead(models.Model):
     phone = models.CharField(max_length=20, blank=True, null=True)
    
     subject = models.TextField(max_length=255, blank=True, null=True)
-    status = models.CharField(max_length=50, choices=[
-        ('Unique Lead', 'Unique Lead'),
-        ('Repeat Lead', 'Repeat Lead'),
-    ])
+    status = models.CharField(
+    max_length=50,
+    choices=[('Unique Lead', 'Unique Lead'), ('Repeat Lead', 'Repeat Lead')],
+    blank=True,
+    null=True
+)
     page_link = models.URLField(null=True, blank=True)
     source = models.URLField(null=True, blank=True)
     medium = models.CharField(max_length=100, blank=True, null=True)
