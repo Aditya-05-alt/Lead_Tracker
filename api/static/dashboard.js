@@ -15,20 +15,16 @@ document.addEventListener("click", function (event) {
 
 // Select dealer and update table
 function selectDealer(dealerName) {
-  // Set the selected dealer name in the placeholder
   const placeholder = document.getElementById("dropdownPlaceholder");
   placeholder.textContent = dealerName;
 
-  // Update page title and heading
-  document.getElementById("navbarTitle").textContent = "LEAD TRACKER"; // Static navbar title
-  document.getElementById("pageTitle").textContent = dealerName; // Page title changes
-  document.getElementById("tableTitle").textContent = dealerName; // Heading changes to dealer's name
+  document.getElementById("navbarTitle").textContent = "LEAD TRACKER";
+  document.getElementById("pageTitle").textContent = dealerName;
+  document.getElementById("tableTitle").textContent = dealerName;
 
-  // Fetch leads for the selected dealer (this can be dynamic based on real data)
-  updateLeadsTable(dealerName);
-
-  // Close dropdown
-  document.getElementById("dropdownList").style.display = "none";
+  // Show table and hide loader
+  document.getElementById("leadsTable").style.display = "table";
+  document.getElementById("loadingContainer").style.display = "none";
 }
 
 // Reset the dealer selection to "Choose a dealer"
@@ -36,19 +32,18 @@ function resetSelection() {
   const placeholder = document.getElementById("dropdownPlaceholder");
   placeholder.textContent = "Choose a dealer";
 
-  // Reset the page title and heading
   document.getElementById("pageTitle").textContent = "Lead Tracker";
   document.getElementById("tableTitle").textContent = "Dealer Dashboard";
 
-  // Clear the table
-  const leadsBody = document.getElementById("leadsBody");
-  leadsBody.innerHTML = ""; // Clear previous data
+  // Hide table and show loader
+  document.getElementById("leadsTable").style.display = "none";
+  document.getElementById("loadingContainer").style.display = "block";
 }
 
 // Update the table based on selected dealer
 function updateLeadsTable(dealerName) {
-  const leadsBody = document.getElementById("leadsBody");
-  leadsBody.innerHTML = ""; // Clear previous data
+  document.getElementById("dropdownList").style.display = "none";
+  localStorage.setItem("selectedDealer", dealerName);
 
 
 }
@@ -56,7 +51,7 @@ function updateLeadsTable(dealerName) {
 // Set username from URL params
 const params = new URLSearchParams(window.location.search);
 const username = params.get("username");
-document.getElementById("username").textContent = username ? username : "Guest";
+document.getElementById("username").textContent = username ? username : "Admin";
 
 
 function updateLeadsTable(dealerName) {
@@ -79,7 +74,15 @@ localStorage.setItem("selectedDealer", dealerName);
 // On load
 document.addEventListener("DOMContentLoaded", () => {
   const savedDealer = localStorage.getItem("selectedDealer");
+  const domain = window.location.hostname.toLowerCase();
+
   if (savedDealer) {
     selectDealer(savedDealer);
+  } else if (domain.includes("brandmirchi")) {
+    selectDealer("BrandMirchi");
+  } else if (domain.includes("themcostudio")) {
+    selectDealer("MCO-Studio");
+  } else {
+    resetSelection();  // default view with loader
   }
 });

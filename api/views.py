@@ -116,5 +116,5 @@ class LeadCreateView(APIView):
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-def test(request):
-     return render(request, 'api/dashboard.html')
+# def test(request):
+#      return render(request, 'api/dashboard.html')
