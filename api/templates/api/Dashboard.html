@@ -86,7 +86,7 @@
             </thead>
             <tbody id="leadsBody">
               {% for lead in leads %}
-              <tr data-dealer="{{ lead.dealer|default:'BrandMirchi' }}">
+              <tr data-dealer="{{ lead.dealer }}">
                   <td>{{ lead.name }}</td>
                   <td>{{ lead.email }}</td>
                   <td>{{ lead.phone }}</td>

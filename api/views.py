@@ -92,12 +92,20 @@ class LeadCreateView(APIView):
 
             medium = data.get('medium', 'Web Form')
 
+            if "brandmirchi" in pagelink:
+                dealer = "BrandMirchi"
+            elif "themcostudio" in pagelink:
+                dealer = "MCO-Studio"
+            else:
+                dealer = "Unknown"
+
             # if not name or not email:
             #     return Response({'error': 'Name and Email are required.'}, status=status.HTTP_400_BAD_REQUEST)
 
             lead = Lead.objects.create(
                 name=name,
                 email=email,
+                dealer = dealer,
                 phone=data.get('phone', ''),
                 subject=data.get('subject', ''),
                 message= message,

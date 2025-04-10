@@ -25,6 +25,8 @@ function selectDealer(dealerName) {
   // Show table and hide loader
   document.getElementById("leadsTable").style.display = "table";
   document.getElementById("loadingContainer").style.display = "none";
+
+  updateLeadsTable(dealerName);
 }
 
 // Reset the dealer selection to "Choose a dealer"
@@ -83,6 +85,6 @@ document.addEventListener("DOMContentLoaded", () => {
   } else if (domain.includes("themcostudio")) {
     selectDealer("MCO-Studio");
   } else {
-    resetSelection();  // default view with loader
+    resetSelection();
   }
 });

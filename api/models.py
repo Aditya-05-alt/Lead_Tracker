@@ -12,6 +12,7 @@ class Lead(models.Model):
     blank=True,
     null=True
 )
+    dealer = models.CharField(max_length=100, blank=True, null=True)
     page_link = models.URLField(null=True, blank=True)
     source = models.URLField(null=True, blank=True)
     medium = models.CharField(max_length=100, blank=True, null=True)
