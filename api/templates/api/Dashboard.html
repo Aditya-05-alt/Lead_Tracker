@@ -80,6 +80,9 @@
                 <th>Page Link</th>
                 <th>Source</th>
                 <th>Medium</th>
+                <th>Campaign</th>
+                <th>Term</th>
+                <th>Content</th>
                 <th>Message</th>
                 <th>Created At</th>
               </tr>
@@ -87,16 +90,19 @@
             <tbody id="leadsBody">
               {% for lead in leads %}
               <tr data-dealer="{{ lead.dealer }}">
-                  <td>{{ lead.name }}</td>
-                  <td>{{ lead.email }}</td>
-                  <td>{{ lead.phone }}</td>
-                  <td>{{ lead.subject }}</td>
-                  <td>{{ lead.status }}</td>
-                  <td>{{ lead.page_link }}</td>
-                  <td>{{ lead.source }}</td>
-                  <td>{{ lead.medium }}</td>
-                  <td>{{ lead.message }}</td>
-                  <td>{{ lead.created_at|date:"Y-m-d H:i" }}</td>
+                <td data-label="Name">{{ lead.name }}</td>
+                <td data-label="Email">{{ lead.email }}</td>
+                <td data-label="Phone">{{ lead.phone }}</td>
+                <td data-label="Subject">{{ lead.subject }}</td>
+                <td data-label="Status">{{ lead.status }}</td>
+                <td data-label="Page Link">{{ lead.page_link }}</td>
+                <td data-label="Source">{{ lead.source }}</td>
+                <td data-label="Medium">{{ lead.medium }}</td>
+                <td data-label="Campaign">{{ lead.utm_campaign }}</td>
+                <td data-label="Term">{{ lead.utm_term }}</td>
+                <td data-label="Content">{{ lead.utm_content }}</td>
+                <td data-label="Message">{{ lead.message }}</td>
+                <td data-label="Created At">{{ lead.created_at|date:"Y-m-d H:i" }}</td>
               </tr>
               {% empty %}
               <tr>

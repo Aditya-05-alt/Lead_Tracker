@@ -72,7 +72,7 @@ class LeadCreateView(APIView):
 
     def post(self, request, *args, **kwargs):
         try:
-            # Manually decode if content is JSON
+            # Decode JSON payload
             if request.content_type == "application/json":
                 data = json.loads(request.body.decode('utf-8'))
             else:
@@ -82,36 +82,41 @@ class LeadCreateView(APIView):
 
             name = data.get('name') or data.get('id_name') or data.get('class_name')
             email = data.get('email') or data.get('id_email') or data.get('class_email')
-            phone = data.get('phone', '') or data.get('id_phone') or data.get('class_phone') or data.get("your-phone")
-            message = data.get('message', '') or data.get('your-message') or data.get('id_message')
+            phone = data.get('phone') or data.get('id_phone') or data.get('class_phone') or data.get('your-phone', '')
+            message = data.get('message') or data.get('your-message') or data.get('id_message', '')
             subject = data.get('subject', '')
 
-            # These now come from JS
-            pagelink = data.get('page_link', 'JS Tracker Unknown Site')
-            source = data.get('source',"Direct")
-
+            page_link = data.get('page_link', 'JS Tracker Unknown Site')
+            source = data.get('source', 'Direct')
             medium = data.get('medium', 'Web Form')
 
-            if "brandmirchi" in pagelink:
+            # Detect dealer from page link
+            if "brandmirchi" in page_link.lower():
                 dealer = "BrandMirchi"
-            elif "themcostudio" in pagelink:
+            elif "themcostudio" in page_link.lower():
                 dealer = "MCO-Studio"
             else:
                 dealer = "Unknown"
 
-            # if not name or not email:
-            #     return Response({'error': 'Name and Email are required.'}, status=status.HTTP_400_BAD_REQUEST)
+            # UTM fields
+            utm_campaign = data.get('utm_campaign', '')
+            utm_term = data.get('utm_term', '')
+            utm_content = data.get('utm_content', '')
 
+            # Save to database
             lead = Lead.objects.create(
                 name=name,
                 email=email,
-                dealer = dealer,
-                phone=data.get('phone', ''),
-                subject=data.get('subject', ''),
-                message= message,
-                page_link=data.get('page_link', ''),
-                source=data.get('source', ''),
-                medium=data.get('medium', 'Web Form'),
+                phone=phone,
+                subject=subject,
+                message=message,
+                page_link=page_link,
+                source=source,
+                medium=medium,
+                dealer=dealer,
+                utm_campaign=utm_campaign,
+                utm_term=utm_term,
+                utm_content=utm_content,
                 status='Unique Lead'
             )
 
