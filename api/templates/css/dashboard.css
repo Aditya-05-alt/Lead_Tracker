@@ -127,9 +127,10 @@ main {
 
 .content {
   background-color: white;
-  margin: 2rem;
+  margin: 2rem auto;
   padding: 2rem;
   border-radius: 10px;
+  max-width: 1200px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -165,5 +166,68 @@ main {
 
   .content {
     margin-left: 0;
+  }
+}
+
+
+/* Fix table styling */
+table.table {
+  width: 100%;
+  margin-top: 1rem;
+  border-collapse: collapse;
+}
+
+table.table th,
+table.table td {
+  padding: 12px 15px;
+  text-align: left;
+  vertical-align: middle;
+  border-bottom: 1px solid #ddd;
+  font-size: 14px;
+}
+
+table.table th {
+  background-color: #f8f9fa;
+  font-weight: bold;
+}
+
+table.table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Responsive Table (mobile view) */
+@media screen and (max-width: 768px) {
+  table.table thead {
+    display: none;
+  }
+
+  table.table, table.table tbody, table.table tr, table.table td {
+    display: block;
+    width: 100%;
+  }
+
+  table.table tr {
+    margin-bottom: 1rem;
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    padding: 10px;
+  }
+
+  table.table td {
+    text-align: right;
+    padding-left: 50%;
+    position: relative;
+  }
+
+  table.table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 15px;
+    width: 45%;
+    padding-left: 10px;
+    font-weight: bold;
+    text-align: left;
+    color: #333;
   }
 }
