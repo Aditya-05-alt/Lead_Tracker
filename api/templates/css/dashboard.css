@@ -171,8 +171,16 @@ main {
 
 
 /* Fix table styling */
+
+.table-container {
+  overflow-x: auto;
+  width: 100%;
+}
+
+
 table.table {
   width: 100%;
+  min-width: 1000px;  
   margin-top: 1rem;
   border-collapse: collapse;
 }
